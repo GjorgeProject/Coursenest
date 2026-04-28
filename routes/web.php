@@ -8,6 +8,7 @@ use App\Http\Controllers\Student\CourseController as StudentCourseController;
 use App\Http\Controllers\Student\LessonProgressController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 
 Route::get('/', function () {
     $featuredCourses = Course::where('status', 'published')
@@ -21,13 +22,9 @@ Route::get('/', function () {
     return view('welcome', compact('featuredCourses'));
 });
 
-Route::get('/dashboard', function () {
-    if (request()->user()->role === 'admin') {
-        return redirect()->route('admin.dashboard');
-    }
-
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [StudentDashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 Route::get('/admin/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
