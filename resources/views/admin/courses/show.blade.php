@@ -17,7 +17,7 @@
 
             <div class="bg-white p-8 rounded-xl shadow-sm">
                 @if ($course->thumbnail)
-                <img src="{{ $course->thumbnail }}"
+                <img src="{{ asset('storage/' . $course->thumbnail) }}"
                     alt="{{ $course->title }}"
                     class="w-full h-64 object-cover rounded-xl mb-6">
                 @endif

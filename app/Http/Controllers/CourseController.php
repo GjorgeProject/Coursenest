@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Course;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class CourseController extends Controller
 {
@@ -38,7 +39,7 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'status' => ['required', 'in:draft,published'],
         ]);
 
@@ -79,7 +80,7 @@ class CourseController extends Controller
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
-            'thumbnail' => ['nullable', 'string', 'max:255'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'status' => ['required', 'in:draft,published'],
         ]);
 
@@ -97,6 +98,16 @@ class CourseController extends Controller
             $validated['slug'] = $newSlug;
         }
 
+        if ($request->hasFile('thumbnail')) {
+            if ($course->thumbnail) {
+                Storage::disk('public')->delete($course->thumbnail);
+            }
+
+            $validated['thumbnail'] = $request->file('thumbnail')->store('courses/thumbnails', 'public');
+        } else {
+            unset($validated['thumbnail']);
+        }
+
         $course->update($validated);
 
         return redirect()->route('admin.courses.index')
@@ -106,6 +117,10 @@ class CourseController extends Controller
     public function destroy(Course $course)
     {
         $this->ensureAdmin();
+
+        if ($course->thumbnail) {
+            Storage::disk('public')->delete($course->thumbnail);
+        }
 
         $course->delete();
 

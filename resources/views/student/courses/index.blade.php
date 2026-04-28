@@ -29,7 +29,7 @@
                 @foreach ($courses as $course)
                 <div class="bg-white rounded-xl shadow-sm overflow-hidden hover:shadow-md transition">
                     @if ($course->thumbnail)
-                    <img src="{{ $course->thumbnail }}"
+                    <img src="{{ asset('storage/' . $course->thumbnail) }}"
                         alt="{{ $course->title }}"
                         class="w-full h-44 object-cover">
                     @else

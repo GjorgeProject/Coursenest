@@ -16,7 +16,7 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-8 rounded-xl shadow-sm">
 
-                <form action="{{ route('admin.courses.update', $course) }}" method="POST" class="space-y-6">
+                <form action="{{ route('admin.courses.update', $course) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -51,13 +51,25 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-2">
-                            Thumbnail URL
+                            Course Thumbnail
                         </label>
 
-                        <input type="text"
+                        @if ($course->thumbnail)
+                        <div class="mb-4">
+                            <img src="{{ asset('storage/' . $course->thumbnail) }}"
+                                alt="{{ $course->title }}"
+                                class="w-full h-48 object-cover rounded-lg">
+                        </div>
+                        @endif
+
+                        <input type="file"
                             name="thumbnail"
-                            value="{{ old('thumbnail', $course->thumbnail) }}"
+                            accept="image/png, image/jpeg, image/jpg, image/webp"
                             class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+
+                        <p class="text-sm text-gray-500 mt-2">
+                            Leave empty if you do not want to change the thumbnail.
+                        </p>
 
                         @error('thumbnail')
                         <p class="text-red-600 text-sm mt-2">{{ $message }}</p>

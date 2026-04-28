@@ -22,7 +22,7 @@
 
             <div class="bg-white rounded-xl shadow-sm overflow-hidden mb-8">
                 @if ($course->thumbnail)
-                <img src="{{ $course->thumbnail }}"
+                <img src="{{ asset('storage/' . $course->thumbnail) }}"
                     alt="{{ $course->title }}"
                     class="w-full h-72 object-cover">
                 @endif
