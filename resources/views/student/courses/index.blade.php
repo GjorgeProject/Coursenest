@@ -47,7 +47,7 @@
                             </span>
 
                             <span class="text-sm text-gray-500">
-                                {{ $course->lessons_count }} lessons
+                                {{ $course->published_lessons_count }} lessons
                             </span>
                         </div>
 
@@ -59,8 +59,21 @@
                             {{ $course->description ?? 'No description available.' }}
                         </p>
 
+                        <div class="mt-3 mb-6">
+                            <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+                                <span>Progress</span>
+                                <span>{{ $course->progress_percentage }}%</span>
+                            </div>
+
+                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                <div class="bg-purple-600 h-2 rounded-full"
+                                    style="width: {{ $course->progress_percentage }}%;">
+                                </div>
+                            </div>
+                        </div>
+
                         <a href="{{ route('student.courses.show', $course) }}"
-                            class="inline-flex items-center justify-center w-full bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition">
+                            class="inline-flex items-center justify-center w-full mt-2 bg-purple-600 text-white px-4 py-3 rounded-lg hover:bg-purple-700 transition">
                             Open Course
                         </a>
                     </div>

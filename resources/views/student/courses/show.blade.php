@@ -35,6 +35,19 @@
                     <p class="text-gray-700 leading-relaxed">
                         {{ $course->description ?? 'No description available.' }}
                     </p>
+
+                    <div class="mt-8">
+                        <div class="flex items-center justify-between text-sm text-gray-600 mb-2">
+                            <span>Course Progress</span>
+                            <span>{{ $completedCount }} / {{ $totalLessons }} lessons completed · {{ $progressPercentage }}%</span>
+                        </div>
+
+                        <div class="w-full bg-gray-200 rounded-full h-3">
+                            <div class="bg-purple-600 h-3 rounded-full"
+                                style="width: {{ $progressPercentage }}%;">
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -53,7 +66,11 @@
                     <a href="{{ route('student.lessons.show', [$course, $lesson]) }}"
                         class="flex items-center justify-between p-6 hover:bg-gray-50 transition">
                         <div>
-                            <h3 class="font-semibold text-gray-900">
+                            <h3 class="font-semibold text-gray-900 flex items-center gap-2">
+                                @if (in_array($lesson->id, $completedLessonIds))
+                                <span class="text-green-600">✓</span>
+                                @endif
+
                                 {{ $lesson->position }}. {{ $lesson->title }}
                             </h3>
 

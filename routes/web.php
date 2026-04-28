@@ -5,6 +5,7 @@ use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CourseController as StudentCourseController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Student\LessonProgressController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,6 +36,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/courses', [StudentCourseController::class, 'index'])->name('student.courses.index');
     Route::get('/courses/{course}', [StudentCourseController::class, 'show'])->name('student.courses.show');
     Route::get('/courses/{course}/lessons/{lesson}', [StudentCourseController::class, 'lesson'])->name('student.lessons.show');
+
+    Route::post('/lessons/{lesson}/toggle-progress', [LessonProgressController::class, 'toggle'])
+        ->name('student.lessons.toggle-progress');
 });
 
 Route::middleware('auth')->group(function () {

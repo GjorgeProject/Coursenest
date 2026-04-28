@@ -49,7 +49,14 @@
                             <p class="text-gray-500 mb-6">
                                 Duration: {{ $lesson->duration ?? 'No duration' }}
                             </p>
+                            <form action="{{ route('student.lessons.toggle-progress', $lesson) }}" method="POST" class="mb-6">
+                                @csrf
 
+                                <button type="submit"
+                                    class="{{ $isCompleted ? 'bg-gray-900 hover:bg-black' : 'bg-purple-600 hover:bg-purple-700' }} text-white px-5 py-3 rounded-lg transition">
+                                    {{ $isCompleted ? 'Mark as Incomplete' : 'Mark as Completed' }}
+                                </button>
+                            </form>
                             <p class="text-gray-700 leading-relaxed">
                                 {{ $lesson->description ?? 'No description available.' }}
                             </p>
@@ -72,7 +79,11 @@
                                 <div class="flex items-start gap-3">
                                     <span class="w-8 h-8 rounded-full flex items-center justify-center text-sm
                                             {{ $sidebarLesson->id === $lesson->id ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700' }}">
+                                        @if (in_array($sidebarLesson->id, $completedLessonIds))
+                                        ✓
+                                        @else
                                         {{ $sidebarLesson->position }}
+                                        @endif
                                     </span>
 
                                     <div>
