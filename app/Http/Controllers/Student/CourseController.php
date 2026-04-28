@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonProgress;
-use Illuminate\Support\Facades\Storage;
+
 
 class CourseController extends Controller
 {
