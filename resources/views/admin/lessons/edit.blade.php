@@ -16,7 +16,7 @@
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white p-8 rounded-xl shadow-sm">
 
-                <form action="{{ route('admin.lessons.update', $lesson) }}" method="POST" class="space-y-6">
+                <form action="{{ route('admin.lessons.update', $lesson) }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
                     @method('PUT')
 
@@ -74,6 +74,54 @@
                         @error('video_url')
                         <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                         @enderror
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Resource Name
+                            </label>
+
+                            <input type="text"
+                                name="resource_name"
+                                value="{{ old('resource_name', $lesson->resource_name) }}"
+                                class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                                placeholder="Lesson notes PDF">
+
+                            @error('resource_name')
+                            <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Resource File
+                            </label>
+
+                            @if ($lesson->resource_file)
+                            <div class="mb-3 bg-gray-50 border rounded-lg p-3 text-sm text-gray-600">
+                                Current file:
+                                <a href="{{ asset('storage/' . $lesson->resource_file) }}"
+                                    target="_blank"
+                                    class="text-purple-600 hover:underline">
+                                    {{ $lesson->resource_name ?? 'Download resource' }}
+                                </a>
+                            </div>
+                            @endif
+
+                            <input type="file"
+                                name="resource_file"
+                                accept=".pdf,.doc,.docx,.zip,.txt"
+                                class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+
+                            <p class="text-sm text-gray-500 mt-2">
+                                Leave empty if you do not want to change the resource file.
+                            </p>
+
+                            @error('resource_file')
+                            <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

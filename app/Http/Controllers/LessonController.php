@@ -6,6 +6,7 @@ use App\Models\Course;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class LessonController extends Controller
 {
@@ -43,16 +44,28 @@ class LessonController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'video_url' => ['nullable', 'string'],
+            'resource_name' => ['nullable', 'string', 'max:255'],
+            'resource_file' => ['nullable', 'file', 'mimes:pdf,doc,docx,zip,txt', 'max:5120'],
             'duration' => ['nullable', 'string', 'max:50'],
             'position' => ['required', 'integer', 'min:1'],
             'status' => ['required', 'in:draft,published'],
         ]);
 
-        $validated['slug'] = $this->generateUniqueSlug($validated['title'], $validated['course_id']);
+        $validated['slug'] = $this->generateUniqueSlug(
+            $validated['title'],
+            $validated['course_id']
+        );
+
+        if ($request->hasFile('resource_file')) {
+            $validated['resource_file'] = $request
+                ->file('resource_file')
+                ->store('lessons/resources', 'public');
+        }
 
         Lesson::create($validated);
 
-        return redirect()->route('admin.lessons.index')
+        return redirect()
+            ->route('admin.lessons.index')
             ->with('success', 'Lesson created successfully.');
     }
 
@@ -83,6 +96,8 @@ class LessonController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'video_url' => ['nullable', 'string'],
+            'resource_name' => ['nullable', 'string', 'max:255'],
+            'resource_file' => ['nullable', 'file', 'mimes:pdf,doc,docx,zip,txt', 'max:5120'],
             'duration' => ['nullable', 'string', 'max:50'],
             'position' => ['required', 'integer', 'min:1'],
             'status' => ['required', 'in:draft,published'],
@@ -98,6 +113,16 @@ class LessonController extends Controller
             );
         }
 
+        if ($request->hasFile('resource_file')) {
+            if ($lesson->resource_file) {
+                Storage::disk('public')->delete($lesson->resource_file);
+            }
+
+            $validated['resource_file'] = $request->file('resource_file')->store('lessons/resources', 'public');
+        } else {
+            unset($validated['resource_file']);
+        }
+
         $lesson->update($validated);
 
         return redirect()->route('admin.lessons.index')
@@ -107,6 +132,10 @@ class LessonController extends Controller
     public function destroy(Lesson $lesson)
     {
         $this->ensureAdmin();
+
+        if ($lesson->resource_file) {
+            Storage::disk('public')->delete($lesson->resource_file);
+        }
 
         $lesson->delete();
 

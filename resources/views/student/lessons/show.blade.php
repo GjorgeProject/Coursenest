@@ -60,6 +60,23 @@
                             <p class="text-gray-700 leading-relaxed">
                                 {{ $lesson->description ?? 'No description available.' }}
                             </p>
+                            @if ($lesson->resource_file)
+                            <div class="mt-8 bg-purple-50 border border-purple-100 rounded-xl p-5">
+                                <h2 class="font-bold text-gray-900 mb-2">
+                                    Lesson Resource
+                                </h2>
+
+                                <p class="text-gray-600 mb-4">
+                                    {{ $lesson->resource_name ?? 'Download lesson resource' }}
+                                </p>
+
+                                <a href="{{ asset('storage/' . $lesson->resource_file) }}"
+                                    target="_blank"
+                                    class="inline-flex bg-purple-600 text-white px-5 py-3 rounded-lg hover:bg-purple-700 transition">
+                                    Download Resource
+                                </a>
+                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>

@@ -22,7 +22,7 @@
                 </div>
                 @endif
 
-                <form action="{{ route('admin.lessons.store') }}" method="POST" class="space-y-6">
+                <form action="{{ route('admin.lessons.store') }}" method="POST" enctype="multipart/form-data" class="space-y-6">
                     @csrf
 
                     <div>
@@ -82,6 +82,42 @@
                         @error('video_url')
                         <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
                         @enderror
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Resource Name
+                            </label>
+
+                            <input type="text"
+                                name="resource_name"
+                                value="{{ old('resource_name') }}"
+                                class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+                                placeholder="Lesson notes PDF">
+
+                            @error('resource_name')
+                            <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">
+                                Resource File
+                            </label>
+
+                            <input type="file"
+                                name="resource_file"
+                                accept=".pdf,.doc,.docx,.zip,.txt"
+                                class="w-full rounded-lg border-gray-300 focus:border-purple-500 focus:ring-purple-500">
+
+                            <p class="text-sm text-gray-500 mt-2">
+                                PDF, DOC, ZIP, or TXT. Max 5MB.
+                            </p>
+
+                            @error('resource_file')
+                            <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -15,6 +15,8 @@ class Lesson extends Model
         'slug',
         'description',
         'video_url',
+        'resource_name',
+        'resource_file',
         'duration',
         'position',
         'status',
