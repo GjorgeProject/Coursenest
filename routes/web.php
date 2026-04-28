@@ -1,15 +1,24 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Student\CourseController as StudentCourseController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\LessonProgressController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Models\Course;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    $featuredCourses = Course::where('status', 'published')
+        ->withCount(['lessons' => function ($query) {
+            $query->where('status', 'published');
+        }])
+        ->latest()
+        ->take(3)
+        ->get();
+
+    return view('welcome', compact('featuredCourses'));
 });
 
 Route::get('/dashboard', function () {
