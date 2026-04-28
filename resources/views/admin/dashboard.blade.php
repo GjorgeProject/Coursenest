@@ -41,7 +41,7 @@
                 </p>
 
                 <div class="flex flex-wrap gap-4">
-                    <a href="#" class="bg-purple-600 text-white px-5 py-3 rounded-lg hover:bg-purple-700 transition">
+                    <a href="{{ route('admin.courses.index') }}" class="bg-purple-600 text-white px-5 py-3 rounded-lg hover:bg-purple-700 transition">
                         Manage Courses
                     </a>
 
