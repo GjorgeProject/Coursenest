@@ -3,13 +3,14 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\LessonController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    if (auth()->user()->role === 'admin') {
+    if (request()->user()->role === 'admin') {
         return redirect()->route('admin.dashboard');
     }
 
@@ -17,15 +18,15 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/admin/dashboard', function () {
-    if (auth()->user()->role !== 'admin') {
+    if (request()->user()->role !== 'admin') {
         abort(403);
     }
 
     return view('admin.dashboard');
 })->middleware(['auth', 'verified'])->name('admin.dashboard');
-
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('courses', CourseController::class);
+    Route::resource('lessons', LessonController::class);
 });
 /*
 |--------------------------------------------------------------------------

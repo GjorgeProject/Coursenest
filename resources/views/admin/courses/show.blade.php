@@ -60,5 +60,49 @@
             </div>
 
         </div>
+
+        <div class="mt-8 bg-white p-8 rounded-xl shadow-sm">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="text-2xl font-bold text-gray-900">Course Lessons</h2>
+                    <p class="text-gray-600 mt-1">Lessons connected to this course.</p>
+                </div>
+
+                <a href="{{ route('admin.lessons.create') }}"
+                    class="bg-purple-600 text-white px-4 py-2 rounded-lg hover:bg-purple-700 transition">
+                    + Add Lesson
+                </a>
+            </div>
+
+            <div class="space-y-4">
+                @forelse ($course->lessons as $lesson)
+                <div class="flex items-center justify-between border rounded-lg p-4">
+                    <div>
+                        <h3 class="font-semibold text-gray-900">
+                            {{ $lesson->position }}. {{ $lesson->title }}
+                        </h3>
+
+                        <p class="text-sm text-gray-500">
+                            {{ $lesson->duration ?? 'No duration' }} · {{ ucfirst($lesson->status) }}
+                        </p>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <a href="{{ route('admin.lessons.show', $lesson) }}"
+                            class="text-blue-600 hover:underline">
+                            View
+                        </a>
+
+                        <a href="{{ route('admin.lessons.edit', $lesson) }}"
+                            class="text-purple-600 hover:underline">
+                            Edit
+                        </a>
+                    </div>
+                </div>
+                @empty
+                <p class="text-gray-500">No lessons added to this course yet.</p>
+                @endforelse
+            </div>
+        </div>
     </div>
 </x-app-layout>

@@ -45,7 +45,7 @@
                         Manage Courses
                     </a>
 
-                    <a href="#" class="bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-black transition">
+                    <a href="{{ route('admin.lessons.index') }}" class="bg-gray-900 text-white px-5 py-3 rounded-lg hover:bg-black transition">
                         Manage Lessons
                     </a>
                 </div>

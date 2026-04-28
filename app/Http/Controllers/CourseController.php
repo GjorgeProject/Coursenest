@@ -8,9 +8,9 @@ use Illuminate\Support\Str;
 
 class CourseController extends Controller
 {
-    private function ensureAdmin()
+    private function ensureAdmin(): void
     {
-        if (auth()->user()->role !== 'admin') {
+        if (request()->user()->role !== 'admin') {
             abort(403);
         }
     }
