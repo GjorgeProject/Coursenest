@@ -21,7 +21,6 @@ class DashboardController extends Controller
                 $query->where('status', 'published')->orderBy('position');
             }])
             ->latest()
-            ->take(3)
             ->get()
             ->map(function ($course) use ($user) {
                 $lessonIds = $course->lessons->pluck('id');
@@ -43,17 +42,33 @@ class DashboardController extends Controller
                 return $course;
             });
 
-        $availableCoursesCount = Course::where('status', 'published')->count();
+        $enrolledCourses = $courses
+            ->where('is_enrolled', true)
+            ->take(3)
+            ->values();
+
+        $exploreCourses = $courses
+            ->where('is_enrolled', false)
+            ->take(3)
+            ->values();
+
+        $availableCoursesCount = $courses->count();
+
+        $enrolledCoursesCount = $courses
+            ->where('is_enrolled', true)
+            ->count();
 
         $completedLessonsCount = LessonProgress::where('user_id', $user->id)->count();
 
-        $averageProgress = $courses->count() > 0
-            ? round($courses->avg('progress_percentage'))
+        $averageProgress = $enrolledCourses->count() > 0
+            ? round($enrolledCourses->avg('progress_percentage'))
             : 0;
 
         return view('dashboard', compact(
-            'courses',
+            'enrolledCourses',
+            'exploreCourses',
             'availableCoursesCount',
+            'enrolledCoursesCount',
             'completedLessonsCount',
             'averageProgress'
         ));
