@@ -7,7 +7,6 @@ use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\LessonProgress;
 
-
 class CourseController extends Controller
 {
     public function index()
@@ -35,6 +34,8 @@ class CourseController extends Controller
                     ? round(($completedCount / $totalLessons) * 100)
                     : 0;
 
+                $course->is_enrolled = $course->isEnrolledBy($user);
+
                 return $course;
             });
 
@@ -48,6 +49,10 @@ class CourseController extends Controller
         }
 
         $user = request()->user();
+
+        if (! $course->isEnrolledBy($user)) {
+            return redirect()->route('student.checkout.show', $course);
+        }
 
         $course->load(['lessons' => function ($query) {
             $query->where('status', 'published')->orderBy('position');
@@ -85,6 +90,10 @@ class CourseController extends Controller
         }
 
         $user = request()->user();
+
+        if (! $course->isEnrolledBy($user)) {
+            return redirect()->route('student.checkout.show', $course);
+        }
 
         $lessons = $course->lessons()
             ->where('status', 'published')

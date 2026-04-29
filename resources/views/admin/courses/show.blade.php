@@ -58,6 +58,13 @@
                             <span class="bg-gray-100 text-gray-600 px-4 py-2 rounded-full text-sm font-semibold">
                                 {{ $course->lessons->count() }} lessons
                             </span>
+                            <span class="bg-indigo-100 text-indigo-700 px-4 py-2 rounded-full text-sm font-bold">
+                                @if ($course->price > 0)
+                                ${{ number_format($course->price, 2) }}
+                                @else
+                                Free
+                                @endif
+                            </span>
                         </div>
 
                         <h1 class="text-3xl lg:text-5xl font-extrabold text-gray-900 leading-tight">

@@ -153,10 +153,22 @@
                                         </div>
                                     </div>
 
+                                    @if ($course->is_enrolled)
                                     <a href="{{ route('student.courses.show', $course) }}"
                                         class="mt-5 inline-flex w-full justify-center bg-purple-600 text-white px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-purple-700 transition">
                                         Continue
                                     </a>
+                                    @else
+                                    <a href="{{ route('student.checkout.show', $course) }}"
+                                        class="mt-5 inline-flex w-full justify-center bg-slate-950 text-white px-4 py-3 rounded-2xl text-sm font-semibold hover:bg-black transition">
+                                        Buy -
+                                        @if ($course->price > 0)
+                                        ${{ number_format($course->price, 2) }}
+                                        @else
+                                        Free
+                                        @endif
+                                    </a>
+                                    @endif
                                 </div>
                             </div>
                             @endforeach

@@ -68,6 +68,34 @@
                         @enderror
                     </div>
 
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 mb-2">
+                            Price
+                        </label>
+
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-500 font-semibold">
+                                $
+                            </span>
+
+                            <input type="number"
+                                name="price"
+                                value="{{ old('price', $course->price) }}"
+                                step="0.01"
+                                min="0"
+                                class="w-full rounded-2xl border-gray-300 focus:border-purple-500 focus:ring-purple-500 pl-8 pr-4 py-3"
+                                placeholder="30.00">
+                        </div>
+
+                        <p class="text-sm text-gray-500 mt-2">
+                            Set 0 for a free course.
+                        </p>
+
+                        @error('price')
+                        <p class="text-red-600 text-sm mt-2">{{ $message }}</p>
+                        @enderror
+                    </div>
+
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-7">
                         <div>
                             <label class="block text-sm font-bold text-gray-700 mb-2">

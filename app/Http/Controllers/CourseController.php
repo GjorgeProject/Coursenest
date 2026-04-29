@@ -40,6 +40,7 @@ class CourseController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'price' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'in:draft,published'],
         ]);
 
@@ -84,6 +85,7 @@ class CourseController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'description' => ['nullable', 'string'],
             'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+            'price' => ['required', 'numeric', 'min:0'],
             'status' => ['required', 'in:draft,published'],
         ]);
 

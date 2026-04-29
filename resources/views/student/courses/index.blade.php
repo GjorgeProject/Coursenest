@@ -96,6 +96,15 @@
                                 {{ $course->published_lessons_count }} lessons
                             </span>
                         </div>
+                        <div class="absolute bottom-4 right-4">
+                            <span class="bg-white/90 backdrop-blur text-gray-900 px-3 py-1 rounded-full text-xs font-extrabold">
+                                @if ($course->price > 0)
+                                ${{ number_format($course->price, 2) }}
+                                @else
+                                Free
+                                @endif
+                            </span>
+                        </div>
                     </div>
 
                     <div class="p-6">
@@ -132,11 +141,25 @@
                             </div>
                         </div>
 
+                        @if ($course->is_enrolled)
                         <a href="{{ route('student.courses.show', $course) }}"
                             class="mt-6 inline-flex items-center justify-center w-full bg-purple-600 text-white px-5 py-3 rounded-2xl font-semibold hover:bg-purple-700 transition shadow-lg shadow-purple-100">
                             Open Course
                             <span class="ml-2 group-hover:translate-x-1 transition">→</span>
                         </a>
+                        @else
+                        <a href="{{ route('student.checkout.show', $course) }}"
+                            class="mt-6 inline-flex items-center justify-center w-full bg-slate-950 text-white px-5 py-3 rounded-2xl font-semibold hover:bg-black transition shadow-lg shadow-gray-200">
+                            Buy Course
+                            <span class="ml-2">
+                                @if ($course->price > 0)
+                                ${{ number_format($course->price, 2) }}
+                                @else
+                                Free
+                                @endif
+                            </span>
+                        </a>
+                        @endif
                     </div>
                 </div>
                 @endforeach

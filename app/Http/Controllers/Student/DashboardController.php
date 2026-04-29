@@ -38,6 +38,8 @@ class DashboardController extends Controller
                     ? round(($completedCount / $totalLessons) * 100)
                     : 0;
 
+                $course->is_enrolled = $course->isEnrolledBy($user);
+
                 return $course;
             });
 

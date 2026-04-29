@@ -102,6 +102,7 @@
                             <tr>
                                 <th class="px-6 py-4">Course</th>
                                 <th class="px-6 py-4">Slug</th>
+                                <th class="px-6 py-4">Price</th>
                                 <th class="px-6 py-4">Status</th>
                                 <th class="px-6 py-4">Created</th>
                                 <th class="px-6 py-4 text-right">Actions</th>
@@ -137,6 +138,13 @@
 
                                 <td class="px-6 py-5 text-sm text-gray-500">
                                     {{ $course->slug }}
+                                </td>
+                                <td class="px-6 py-5 text-sm font-bold text-gray-900">
+                                    @if ($course->price > 0)
+                                    ${{ number_format($course->price, 2) }}
+                                    @else
+                                    Free
+                                    @endif
                                 </td>
 
                                 <td class="px-6 py-5">
