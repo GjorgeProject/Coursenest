@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Course;
 use App\Models\Lesson;
 use App\Models\User;
+use App\Models\CourseEnrollment;
 
 class DashboardController extends Controller
 {
@@ -18,6 +19,7 @@ class DashboardController extends Controller
         $totalCourses = Course::count();
         $totalLessons = Lesson::count();
         $totalStudents = User::where('role', 'student')->count();
+        $totalEnrollments = CourseEnrollment::count();
 
         $recentCourses = Course::latest()->take(5)->get();
 
@@ -25,7 +27,8 @@ class DashboardController extends Controller
             'totalCourses',
             'totalLessons',
             'totalStudents',
-            'recentCourses'
+            'totalEnrollments',
+            'recentCourses',
         ));
     }
 }

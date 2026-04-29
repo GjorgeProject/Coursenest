@@ -67,7 +67,21 @@
                 <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
                     <div class="flex items-start justify-between">
                         <div>
-                            <p class="text-sm text-gray-500 font-medium">Platform Status</p>
+                            <div class="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                                <div class="flex items-start justify-between">
+                                    <div>
+                                        <p class="text-sm text-gray-500 font-medium">Enrollments</p>
+                                        <h3 class="text-4xl font-extrabold text-gray-900 mt-3">
+                                            {{ $totalEnrollments }}
+                                        </h3>
+                                        <p class="text-sm text-green-600 mt-3">Unlocked courses</p>
+                                    </div>
+
+                                    <div class="w-14 h-14 rounded-2xl bg-indigo-100 text-indigo-700 flex items-center justify-center text-2xl">
+                                        💳
+                                    </div>
+                                </div>
+                            </div>
                             <h3 class="text-4xl font-extrabold text-gray-900 mt-3">Live</h3>
                             <p class="text-sm text-green-600 mt-3">System working</p>
                         </div>

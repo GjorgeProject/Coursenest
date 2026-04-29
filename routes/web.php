@@ -10,6 +10,7 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\DashboardController as StudentDashboardController;
 use App\Http\Controllers\Student\CheckoutController;
+use App\Http\Controllers\Admin\EnrollmentController;
 
 Route::get('/', function () {
     $featuredCourses = Course::where('status', 'published')
@@ -34,6 +35,7 @@ Route::get('/admin/dashboard', [DashboardController::class, 'index'])
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('courses', CourseController::class);
     Route::resource('lessons', LessonController::class);
+    Route::get('/enrollments', [EnrollmentController::class, 'index'])->name('enrollments.index');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
