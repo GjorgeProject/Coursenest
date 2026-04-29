@@ -28,9 +28,11 @@
                     <!-- Image -->
                     <div class="lg:col-span-2">
                         @if ($course->thumbnail)
-                        <img src="{{ asset('storage/' . $course->thumbnail) }}"
-                            alt="{{ $course->title }}"
-                            class="w-full h-72 lg:h-full object-cover">
+                        <div class="w-full h-72 lg:h-full bg-gray-50 flex items-center justify-center p-6">
+                            <img src="{{ asset('storage/' . $course->thumbnail) }}"
+                                alt="{{ $course->title }}"
+                                class="max-w-full max-h-full object-contain rounded-2xl">
+                        </div>
                         @else
                         <div class="w-full h-72 lg:h-full bg-gradient-to-br from-purple-100 to-indigo-100 flex items-center justify-center">
                             <span class="text-purple-700 text-2xl font-extrabold">

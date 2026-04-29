@@ -53,8 +53,11 @@ class CourseController extends Controller
             $counter++;
         }
 
-        Course::create($validated);
+        if ($request->hasFile('thumbnail')) {
+            $validated['thumbnail'] = $request->file('thumbnail')->store('courses/thumbnails', 'public');
+        }
 
+        Course::create($validated);
         return redirect()->route('admin.courses.index')
             ->with('success', 'Course created successfully.');
     }
